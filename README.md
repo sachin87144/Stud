@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Note Sharing App</title>
+    <title>My Personal Web Space</title>
     <style>
         * {
             margin: 0;
@@ -11,398 +11,433 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: #333;
+            background: linear-gradient(135deg, cyan,pink , #fdbb2d);
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        
+
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 900px;
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
-        
-        header {
-            background: linear-gradient(to right, #4a00e0, #8e2de2);
-            color: white;
-            padding: 20px;
+
+        .form-container {
+            padding: 40px;
+            transition: all 0.5s ease;
+        }
+        h1{
             text-align: center;
+            margin-bottom:25px;
+            color :deepskyblue;
         }
-        
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: hotpink;
         }
-        
-        .subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
+        h3{
+            text-align: center;
+            margin-bottom:30px;
+            color:salmon;
+            
         }
-        
-        .main-content {
-            padding: 25px;
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
         }
-        
-        .note-form {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
         }
-        
-        .form-group {
-            margin-bottom: 15px;
+
+        input:focus {
+            outline: none;
+            border-color: #1a2a6c;
+            box-shadow: 0 0 5px rgba(26, 42, 108, 0.3);
         }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #495057;
-        }
-        
-        input, textarea {
+
+        button {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #6a11cb;
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        button {
-            background: linear-gradient(to right, #4a00e0, #8e2de2);
-            color: white;
+            background: linear-gradient(to right, grey, orange);
             border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: opacity 0.3s;
         }
-        
+
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0.9;
         }
-        
-        .notes-section h2 {
-            color: #495057;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e9ecef;
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
         }
-        
-        .note {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #8e2de2;
+
+        .dashboard {
+            padding: 30px;
+            display: none;
         }
-        
-        .note-header {
+
+        .header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
         }
-        
-        .note-author {
-            font-weight: 600;
-            color: #4a00e0;
+
+        .welcome {
+            text-align: left;
         }
-        
-        .note-date {
-            color: #6c757d;
-            font-size: 0.9rem;
+
+        .welcome h2 {
+            margin-bottom: 5px;
+            text-align: left;
         }
-        
-        .note-content {
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        
-        .replies {
-            margin-top: 15px;
-            padding-left: 20px;
-            border-left: 2px solid #e9ecef;
-        }
-        
-        .reply {
+
+        .last-login {
             background-color: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        
-        .reply-form {
-            margin-top: 15px;
+
+        .last-login p {
+            margin: 5px 0;
+            background color:pink;
+        }
+
+        .logout-btn {
+            background: linear-gradient(to right, #Tan, #e67e22);
+            width: auto;
+            padding: 8px 15px;
+        }
+
+        .user-info {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .user-info p {
+            margin: 8px 0;
+            color: #444;
+        }
+
+        .content-area {
+            margin-top: 30px;
+        }
+
+        .content-area h3 {
+            margin-bottom: 15px;
+            color: darkslategrey;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            transition: border 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #1a2a6c;
+            box-shadow: 0 0 5px rgba(26, 42, 108, 0.3);
+        }
+
+        .save-btn {
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            width: auto;
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        .saved-message {
+            color: mistyrose;
+            margin-top: 10px;
             display: none;
         }
-        
-        .reply-btn {
-            background: linear-gradient(to right, #00b09b, #96c93d);
-            padding: 8px 15px;
-            font-size: 0.9rem;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #6c757d;
-        }
-        
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #adb5bd;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #6c757d;
-            font-size: 0.9rem;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        @media (max-width: 600px) {
+
+        @media (max-width: 768px) {
             .container {
-                border-radius: 10px;
+                max-width: 95%;
             }
             
-            h1 {
-                font-size: 1.8rem;
+            .form-container, .dashboard {
+                padding: 20px;
             }
             
-            .main-content {
-                padding: 15px;
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logout-btn {
+                margin-top: 10px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Note Sharing App</h1>
-            <p class="subtitle">Write notes and share with others to get their replies</p>
-        </header>
-        
-        <div class="main-content">
-            <div class="note-form">
-                <h2>Write a New Note</h2>
-                <form id="noteForm">
-                    <div class="form-group">
-                        <label for="authorName">Your Name</label>
-                        <input type="text" id="authorName" placeholder="Enter your name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="noteContent">Your Note</label>
-                        <textarea id="noteContent" placeholder="Write your note here..." required></textarea>
-                    </div>
-                    <button type="submit">Post Note</button>
-                </form>
+        <!-- Login Form -->
+        <div class="form-container" id="loginForm">
+            <h2>Welcome to study web</h2>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" required>
+                <div class="error" id="usernameError">Please enter a valid username (min 3 characters)</div>
             </div>
-            
-            <div class="notes-section">
-                <h2>Shared Notes</h2>
-                <div id="notesContainer">
-                    <!-- Notes will be displayed here -->
-                    <div class="empty-state">
-                        <i>📝</i>
-                        <p>No notes yet. Be the first to share a note!</p>
-                    </div>
-                </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="error" id="passwordError">Password must be at least 6 characters</div>
+            </div>
+            <button id="loginBtn">Login</button>
+            <div class="input-group" style="text-align: center; margin-top: 15px;">
+                <p>Sabhi prakat ke notes yaha milenge<br> radhe radhe💞</p>
             </div>
         </div>
-        
-        <footer>
-            <p>Note Sharing App &copy; 2023 | Share your thoughts and get feedback</p>
-        </footer>
+
+        <!-- Dashboard -->
+        <div class="dashboard" id="dashboard">
+            <div class="header">
+                <div class="welcome">
+                    <h2>Welcome, <span id="userDisplayName">User</span>!</h2>
+                    <p>Idhar ati rehna me idhar hi msg write </p>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+            
+            <div class="last-login">
+                <h3>Radhe Radhe</h3>
+               <p>bhen sachin ne mujhse bola hai ki sorry bol diyo isley sorry bol raha hu apke paper hai mujhe pata hai or ap irritate ho me apki har tarike se help karunga par ap help nahi mangogi fir bhi ek bhai samajh kar mang sakti ho or ap padhai par focus karo iŕitate mat ho</p>
+                
+            </div>
+            
+            <div class="user-info">
+                <h3>bhen dekhti raha karna har 2 hour baad</h3>
+<p>bhen password hai 123321 ise kahi copy me likh lena or user name hai Tamanna or ap ise chek karti raha karna yeh koi nahi khol payega bina password ke isley secure hai or me is par bhot ache msg dala karunga bs ap read karna or prutha se apni dosti achi rakho bo apki sach me bhot achi freind hai ap iske reply me bs 'yes'likh diya karna jab bhi dekho or whatsapp par</p>
+            </div>
+            
+            <div class="content-area">
+                <h3>Your Personal Notes</h3>
+                <p>kal se sachin ki helath sahi hai ap garba khel rahi ho kya usne bola ki bhai bol diyo ki me sahi ho jaunga or navratri enjoy karen or vo apki avaj sunna chata hai or apko dekhna chata hai bhen pls mana mat karna apni ek pick prutha ko bhej do:</p><hr>
+<img src="/image/Screenshot_20250927_115921_Gallery.jpg"hight="120"width="280">
+<p>sach me phele jaisi lag rahi ho</p>
+               
+                <br>
+                <br>
+                <h3>Thanks msg padhne ke liye</h3>
+               
+              
+                <button class="save-btn" id="saveNotesBtn">Save Notes</button>
+                <div class="saved-message" id="savedMessage">Notes saved successfully!</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Sample initial notes data
-        let notes = [
-            {
-                id: 1,
-                author: "Alex Johnson",
-                content: "This is a great idea for sharing thoughts and getting feedback! Looking forward to seeing what others think.",
-                date: "2023-10-15",
-                replies: [
-                    { author: "Sam Wilson", content: "I agree! This could be really useful for team collaboration.", date: "2023-10-16" },
-                    { author: "Taylor Smith", content: "Love the simplicity of this app. Easy to use and effective.", date: "2023-10-17" }
-                ]
-            },
-            {
-                id: 2,
-                author: "Maria Garcia",
-                content: "Has anyone tried the new project management tool? I'd love to hear your experiences before we decide to adopt it.",
-                date: "2023-10-18",
-                replies: [
-                    { author: "David Lee", content: "We've been using it for a month now. The learning curve is a bit steep but it's powerful once you get the hang of it.", date: "2023-10-19" }
-                ]
-            }
-        ];
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const dashboard = document.getElementById('dashboard');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const usernameError = document.getElementById('usernameError');
+        const passwordError = document.getElementById('passwordError');
+        const userDisplayName = document.getElementById('userDisplayName');
+        const displayUsername = document.getElementById('displayUsername');
+        const lastLoginDate = document.getElementById('lastLoginDate');
+        const accountCreated = document.getElementById('accountCreated');
+        const personalNotes = document.getElementById('personalNotes');
+        const saveNotesBtn = document.getElementById('saveNotesBtn');
+        const savedMessage = document.getElementById('savedMessage');
 
-        // DOM elements
-        const noteForm = document.getElementById('noteForm');
-        const notesContainer = document.getElementById('notesContainer');
-        const authorNameInput = document.getElementById('authorName');
-        const noteContentInput = document.getElementById('noteContent');
+        // Default credentials
+        const DEFAULT_USERNAME = "Tamanna";
+        const DEFAULT_PASSWORD = "123321";
 
-        // Display notes when page loads
-        document.addEventListener('DOMContentLoaded', displayNotes);
-
-        // Handle form submission
-        noteForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const author = authorNameInput.value.trim();
-            const content = noteContentInput.value.trim();
-            
-            if (author && content) {
-                addNote(author, content);
-                authorNameInput.value = '';
-                noteContentInput.value = '';
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                showDashboard(user);
+                
+                // Load saved notes
+                const savedNotes = localStorage.getItem(`notes_${user.username}`);
+                if (savedNotes) {
+                    personalNotes.value = savedNotes;
+                }
             }
         });
 
-        // Function to add a new note
-        function addNote(author, content) {
-            const newNote = {
-                id: Date.now(), // Simple ID generation
-                author: author,
-                content: content,
-                date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
-                replies: []
-            };
+        // Login functionality
+        loginBtn.addEventListener('click', function() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
             
-            notes.unshift(newNote); // Add to beginning of array
-            displayNotes();
-        }
+            // Reset errors
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+            
+            // Validate inputs
+            let isValid = true;
+            
+            if (username.length < 3) {
+                usernameError.textContent = 'Username must be at least 3 characters';
+                usernameError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (password.length < 6) {
+                passwordError.textContent = 'Password must be at least 6 characters';
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Check credentials (in a real app, this would connect to a server)
+            if (username === DEFAULT_USERNAME && password === DEFAULT_PASSWORD) {
+                // Successful login with default credentials
+                handleSuccessfulLogin(username);
+            } else {
+                // Check if user exists in localStorage
+                let users = JSON.parse(localStorage.getItem('users')) || {};
+                
+                if (users[username] && users[username].password === password) {
+                    // Successful login with stored user
+                    handleSuccessfulLogin(username);
+                } else {
+                    // Invalid credentials
+                    passwordError.textContent = 'Invalid username or password';
+                    passwordError.style.display = 'block';
+                }
+            }
+        });
 
-        // Function to add a reply to a note
-        function addReply(noteId, author, content) {
-            const note = notes.find(note => note.id === noteId);
-            if (note) {
-                const newReply = {
-                    author: author,
-                    content: content,
-                    date: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+        function handleSuccessfulLogin(username) {
+            // Get or create user data in localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || {};
+            
+            if (!users[username]) {
+                // New user
+                users[username] = {
+                    username: username,
+                    displayName: username.charAt(0).toUpperCase() + username.slice(1),
+                    accountCreated: new Date().toLocaleDateString(),
+                    lastLogin: null,
+                    password: passwordInput.value // In a real app, passwords should be hashed
                 };
-                
-                note.replies.push(newReply);
-                displayNotes();
+            } else {
+                // Update last login for existing user
+                users[username].lastLogin = new Date().toISOString();
+            }
+            
+            // Save updated user data
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Set current user
+            localStorage.setItem('currentUser', JSON.stringify(users[username]));
+            
+            // Show dashboard
+            showDashboard(users[username]);
+            
+            // Load saved notes for this user
+            const savedNotes = localStorage.getItem(`notes_${username}`);
+            if (savedNotes) {
+                personalNotes.value = savedNotes;
             }
         }
 
-        // Function to display all notes
-        function displayNotes() {
-            if (notes.length === 0) {
-                notesContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i>📝</i>
-                        <p>No notes yet. Be the first to share a note!</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            notesContainer.innerHTML = '';
-            
-            notes.forEach(note => {
-                const noteElement = document.createElement('div');
-                noteElement.className = 'note';
-                noteElement.innerHTML = `
-                    <div class="note-header">
-                        <span class="note-author">${note.author}</span>
-                        <span class="note-date">${formatDate(note.date)}</span>
-                    </div>
-                    <div class="note-content">${note.content}</div>
-                    <button class="reply-btn" data-note-id="${note.id}">Reply</button>
-                    
-                    <div class="replies">
-                        ${note.replies.map(reply => `
-                            <div class="reply">
-                                <div class="note-header">
-                                    <span class="note-author">${reply.author}</span>
-                                    <span class="note-date">${formatDate(reply.date)}</span>
-                                </div>
-                                <div class="note-content">${reply.content}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <form class="reply-form" id="replyForm-${note.id}">
-                        <div class="form-group">
-                            <input type="text" placeholder="Your name" class="reply-author" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Your reply..." class="reply-content" required></textarea>
-                        </div>
-                        <button type="submit">Post Reply</button>
-                    </form>
-                `;
+        // Logout functionality
+        logoutBtn.addEventListener('click', function() {
+            localStorage.removeItem('currentUser');
+            showLoginForm();
+        });
+
+        // Save notes functionality
+        saveNotesBtn.addEventListener('click', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                localStorage.setItem(`notes_${currentUser.username}`, personalNotes.value);
                 
-                notesContainer.appendChild(noteElement);
-            });
+                // Show saved message
+                savedMessage.style.display = 'block';
+                setTimeout(function() {
+                    savedMessage.style.display = 'none';
+                }, 2000);
+            }
+        });
+
+        // Show dashboard
+        function showDashboard(user) {
+            loginForm.style.display = 'none';
+            dashboard.style.display = 'block';
             
-            // Add event listeners to reply buttons
-            document.querySelectorAll('.reply-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const noteId = parseInt(this.getAttribute('data-note-id'));
-                    const replyForm = document.getElementById(`replyForm-${noteId}`);
-                    replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
-                });
-            });
+            // Update user info
+            userDisplayName.textContent = user.displayName;
+            displayUsername.textContent = user.username;
+            accountCreated.textContent = user.accountCreated;
             
-            // Add event listeners to reply forms
-            document.querySelectorAll('form[id^="replyForm-"]').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const noteId = parseInt(this.id.split('-')[1]);
-                    const authorInput = this.querySelector('.reply-author');
-                    const contentInput = this.querySelector('.reply-content');
-                    
-                    const author = authorInput.value.trim();
-                    const content = contentInput.value.trim();
-                    
-                    if (author && content) {
-                        addReply(noteId, author, content);
-                        authorInput.value = '';
-                        contentInput.value = '';
-                        this.style.display = 'none';
-                    }
-                });
-            });
+            // Format and display last login
+            if (user.lastLogin) {
+                const lastLogin = new Date(user.lastLogin);
+                lastLoginDate.textContent = lastLogin.toLocaleString();
+            } else {
+                lastLoginDate.textContent = 'This is your first login!';
+            }
         }
 
-        // Helper function to format date
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString(undefined, options);
+        // Show login form
+        function showLoginForm() {
+            dashboard.style.display = 'none';
+            loginForm.style.display = 'block';
+            
+            // Clear form
+            usernameInput.value = '';
+            passwordInput.value = '';
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
         }
+
+        // Allow login with Enter key
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
     </script>
 </body>
 </html>
